@@ -31,7 +31,7 @@ public class ServerResource {
     @GetMapping("/list")
     public ResponseEntity<Response> getServers(){
         return ResponseEntity.ok(Response.builder().
-                timeStamp(now()).data(of("servers", serviceImplementation.list(30))).
+                timeStamp(now()).data(of("servers", serviceImplementation.list(10))).
                 message("Servers retrieved").
                 status(HttpStatus.OK).
                 statusCode(HttpStatus.OK.value()).
@@ -39,7 +39,7 @@ public class ServerResource {
     }
 
 
-    @GetMapping("/ping/ipAddress")
+    @GetMapping("/ping/{ipAddress}")
     public ResponseEntity<Response> pingServer(@PathVariable("ipAddress") String ipAddress) throws IOException {
         Server server = serviceImplementation.ping(ipAddress);
         return ResponseEntity.ok(Response.builder().
@@ -83,7 +83,7 @@ public class ServerResource {
 
     @GetMapping(path = "/image/{fileName}", produces = IMAGE_PNG_VALUE)
     public byte[] getServerImage(@PathVariable("fileName") String fileName) throws IOException {
-        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "Downloads/images" + fileName));
+        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/Downloads/images/" + fileName));
     }
 
 }
